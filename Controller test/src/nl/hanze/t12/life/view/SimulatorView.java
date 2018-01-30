@@ -14,14 +14,18 @@ public class SimulatorView extends JFrame {
     private int numberOfFloors;
     private int numberOfRows;
     private int numberOfPlaces;
-    private int numberOfOpenSpots;
+    public int numberOfOpenSpots;
+    public int numberOfOpenPassSpots;
     private Car[][][] cars;
+    private int abonnementPlekken;
 
     public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
+    	setAbonnementPlekken();
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
-        this.numberOfOpenSpots =numberOfFloors*numberOfRows*numberOfPlaces;
+        this.numberOfOpenSpots =numberOfFloors*numberOfRows*(numberOfPlaces-abonnementPlekken);
+        this.numberOfOpenPassSpots =numberOfFloors*numberOfRows*abonnementPlekken;
         cars = new Car[numberOfFloors][numberOfRows][numberOfPlaces];
         
         
@@ -31,9 +35,14 @@ public class SimulatorView extends JFrame {
         contentPane.add(carParkView, BorderLayout.CENTER);
         pack();
         setVisible(true);
+        
 
         updateView();
         
+    }
+    
+    public void setAbonnementPlekken() {
+    	abonnementPlekken = 8;// is het aantal abonnementplekken per rij
     }
 
     public void updateView() {
@@ -55,6 +64,10 @@ public class SimulatorView extends JFrame {
     public int getNumberOfOpenSpots(){
     	return numberOfOpenSpots;
     }
+
+    public int getNumberOfOpenPassSpots(){
+    	return numberOfOpenPassSpots;
+    }
     
     public Car getCarAt(Location location) {
         if (!locationIsValid(location)) {
@@ -71,7 +84,12 @@ public class SimulatorView extends JFrame {
         if (oldCar == null) {
             cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
             car.setLocation(location);
-            numberOfOpenSpots--;
+            if(location.getPlace() <= abonnementPlekken) {
+            	numberOfOpenPassSpots--;
+            }
+            else {
+            	numberOfOpenSpots--;
+            }
             return true;
         }
         return false;
@@ -87,14 +105,33 @@ public class SimulatorView extends JFrame {
         }
         cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
         car.setLocation(null);
-        numberOfOpenSpots++;
+        if(location.getPlace() <= abonnementPlekken) {
+        	numberOfOpenPassSpots++;
+        }
+        else {
+        	numberOfOpenSpots++;
+        }
         return car;
     }
 
     public Location getFirstFreeLocation() {
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
-                for (int place = 0; place < getNumberOfPlaces(); place++) {
+                for (int place = abonnementPlekken; place < getNumberOfPlaces(); place++) {
+                    Location location = new Location(floor, row, place);
+                    if (getCarAt(location) == null) {
+                        return location;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    public Location getFirstFreeLocationPass() {
+        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
+            for (int row = 0; row < getNumberOfRows(); row++) {
+                for (int place = 0; place < abonnementPlekken; place++) {
                     Location location = new Location(floor, row, place);
                     if (getCarAt(location) == null) {
                         return location;
@@ -193,10 +230,22 @@ private class CarParkView extends JPanel {
             size = getSize();
             carParkImage = createImage(size.width, size.height);
         }
+        setAbonnementPlekken();
         Graphics graphics = carParkImage.getGraphics();
+        for(int floor = 0; floor < getNumberOfFloors(); floor++) {// eerste blok zorgt voor het aanmaken van abonnementplekken
+            for(int row = 0; row < getNumberOfRows(); row++) {
+                for(int place = 0; place < abonnementPlekken; place++) {
+                    Location location = new Location(floor, row, place);
+                    Car car = getCarAt(location);
+                    Color color = car == null ? Color.gray : car.getColor();
+                    drawPlace(graphics, location, color);
+                }
+            }
+        }
+        
         for(int floor = 0; floor < getNumberOfFloors(); floor++) {
             for(int row = 0; row < getNumberOfRows(); row++) {
-                for(int place = 0; place < getNumberOfPlaces(); place++) {
+                for(int place = abonnementPlekken; place < getNumberOfPlaces(); place++) {
                     Location location = new Location(floor, row, place);
                     Car car = getCarAt(location);
                     Color color = car == null ? Color.white : car.getColor();
@@ -218,5 +267,5 @@ private class CarParkView extends JPanel {
                 20 - 1,
                 10 - 1); // TODO use dynamic size or constants
     }
-}
+  }
 }

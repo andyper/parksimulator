@@ -23,7 +23,7 @@ public class Simulator extends JFrame {
 	public Simulator() {
 		simulator=new SimulatorModel();
 		JLabel label1 = new JLabel("Aantal auto's in garage");
-		JLabel aantalAdHocCars = new JLabel(String.valueOf(simulator.totalAdHocCars));
+		JLabel aantalAdHocCars = new JLabel(String.valueOf(simulator.getAantalAdHocCars()));
 		JLabel aantalPassCars = new JLabel(String.valueOf(simulator.totalPassCars));
 		parkeerController=new ParkeerController(simulator);
 		//carParkView=new CarParkView();

@@ -18,6 +18,8 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     private SimulatorView simulatorView;
     public int totalAdHocCars;
     public int totalPassCars;
+    public int lostPassCar;
+    public int lostAdHocCar;
     
     private int day = 0;
     private int hour = 0;
@@ -111,10 +113,20 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 
     }
 
-    private void handleEntrance(){
+    private void handleEntrance(){// aangepast om rekening te houden voor als de queue te lang is.
     	carsArriving();
+    	if(entrancePassQueue.carsInQueue() > 5) {
+    		lostPassCar++;
+    	}
+    	else {
     	carsEntering(entrancePassQueue);
+    	}
+    	if(entranceCarQueue.carsInQueue() > 5) {
+    		lostAdHocCar++;
+    	}
+    	else {
     	carsEntering(entranceCarQueue);
+    	}
     }
     
     private void handleExit(){
@@ -140,12 +152,28 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         int i=0;
         // Remove car from the front of the queue and assign to a parking space.
     	while (queue.carsInQueue()>0 && 
-    			simulatorView.getNumberOfOpenSpots()>0 && 
     			i<enterSpeed) {
             Car car = queue.removeCar();
-            Location freeLocation = simulatorView.getFirstFreeLocation();
-            simulatorView.setCarAt(freeLocation, car);
-            i++;
+            if(queue == entranceCarQueue && simulatorView.getNumberOfOpenSpots()>0 ) {
+            	Location freeLocation = simulatorView.getFirstFreeLocation();
+            	simulatorView.setCarAt(freeLocation, car);
+            	i++;
+            }
+            else{ // toegevoegd om abonnement auto's naar hun eigen vrije plekken te rijden
+            	if(simulatorView.getNumberOfOpenPassSpots()>0) {
+            		Location freeLocation = simulatorView.getFirstFreeLocationPass();
+            		simulatorView.setCarAt(freeLocation, car);
+            		i++;
+            	}
+            	else {
+            		// als de abonnement plekken vol zijn worden dan komen de abonnement auto's in de normale plekken te staan
+            		if(simulatorView.getNumberOfOpenSpots()>0) {
+            			Location freeLocation = simulatorView.getFirstFreeLocation();
+            			simulatorView.setCarAt(freeLocation, car);
+            			i++;
+            		}
+            	}
+            }
         }
     }
     
@@ -231,7 +259,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 	
 	public int getAantalAdHocCars() {
 		
-		return (int) (totalAdHocCars/1.5);
+		return totalAdHocCars;
 	}
 
 
