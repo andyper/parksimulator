@@ -10,6 +10,9 @@ import java.awt.*;
 
 public class AdHocCar extends Car {
 	private static final Color COLOR=Color.red;
+	public static double opbrengstPerAuto;
+	public double prijsPerMinuut = 0.05;
+	
 	
     public AdHocCar() {
     	Random random = new Random();
@@ -20,5 +23,12 @@ public class AdHocCar extends Car {
     
     public Color getColor(){
     	return COLOR;
+    }
+    
+    public void berekenOpbrengst(int stayMinutes, double prijsPerMinuut) {
+    	opbrengstPerAuto = stayMinutes * prijsPerMinuut;
+    }
+    public static double krijgOpbrengst() {
+    	return opbrengstPerAuto;
     }
 }

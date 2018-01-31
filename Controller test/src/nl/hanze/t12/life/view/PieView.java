@@ -13,9 +13,12 @@ public class PieView extends AbstractView {
 
 	public void paintComponent(Graphics g) {
 		int aantalCars=getModel().getAantalCars();
+		int aantalPassCars=getModel().getAantalPassCars();
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, 200, 200);
 		g.setColor(Color.BLUE);
 		g.fillArc(10, 10, 180, 180, 0, aantalCars);
+		g.setColor(Color.RED);
+		g.fillArc(10, 10, 180, 180, 0, aantalPassCars);
 	}	
 }

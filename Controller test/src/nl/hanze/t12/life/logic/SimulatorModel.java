@@ -21,9 +21,9 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     public int lostPassCar;
     public int lostAdHocCar;
     
-    private int day = 0;
-    private int hour = 0;
-    private int minute = 0;
+    public int day = 0;
+    public int hour = 0;
+    public int minute = 0;
 
     private int tickPause = 100;
 
@@ -262,6 +262,10 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 		return totalAdHocCars;
 	}
 	
+	public int getAantalPassCars() {
+		return totalPassCars;
+	}
+	
 	//voor de statistieken
     public int getNumberOfOpenSpots(){
         return simulatorView.numberOfOpenSpots;
@@ -275,5 +279,14 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         return simulatorView.numberOfOpenSpots+simulatorView.numberOfOpenPassSpots;
     }
 
-
+    public int getDay() {
+    	return day;
+    }
+    
+    public int getMinute() {
+    	return minute;
+    }
+    public int getHour() {
+    	return hour;
+    }
 }

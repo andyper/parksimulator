@@ -12,6 +12,9 @@ public class Simulator extends JFrame {
 	
 	private JFrame screen;
 	private AbstractView statView;
+	private AbstractView tijdView;
+	private AbstractView pieStatView;
+	private AbstractView geldView;
 	//private CarParkView carParkView;
 	AbstractController parkeerController;
 	private AbstractView aantalAutoView;
@@ -32,6 +35,9 @@ public class Simulator extends JFrame {
 		//runController=new RunController(simulator);
 		aantalAutoView=new PieView(simulator);
 		statView = new StatView(simulator);
+		tijdView = new TijdView(simulator);
+		pieStatView = new PieStatView(simulator);
+		geldView = new GeldView(simulator);
 		//statView=new StatView(simulator);
 		
 		screen=new JFrame("ParkeerSimulator");
@@ -43,6 +49,9 @@ public class Simulator extends JFrame {
 		screen.getContentPane().add(aantalAdHocCars);
 		screen.getContentPane().add(aantalPassCars);
 		screen.getContentPane().add(statView);
+		screen.getContentPane().add(tijdView);
+		screen.getContentPane().add(pieStatView);
+		screen.getContentPane().add(geldView);
 		
 		
 		label1.setBounds(60, 10, 200, 20);
@@ -55,6 +64,9 @@ public class Simulator extends JFrame {
 		screen.getContentPane().add(parkeerController);
 		aantalAutoView.setBounds(30, 30, 200, 200);
 		statView.setBounds(240, 30, 200, 200);
+		tijdView.setBounds(400, 10, 200, 20);
+		pieStatView.setBounds(30, 250, 200, 200);
+		geldView.setBounds(250, 260, 200, 200);
 		//statView.setBounds(230, 10, 200, 200);
 		//runController.setBounds(0, 210, 450, 50);
 		//initController.setBounds(440, 10, 90, 130);
