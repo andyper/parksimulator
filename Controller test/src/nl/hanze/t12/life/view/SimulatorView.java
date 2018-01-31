@@ -16,6 +16,10 @@ public class SimulatorView extends JFrame {
     private int numberOfPlaces;
     public int numberOfOpenSpots;
     public int numberOfOpenPassSpots;
+    public int entranceCarQueue;
+    public int entrancePassQueue;
+    public int lostAdHocCar;
+    public int lostPassCar;
     private Car[][][] cars;
     public int abonnementPlekken;
 

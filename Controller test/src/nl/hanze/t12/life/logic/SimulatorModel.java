@@ -317,6 +317,21 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         return simulatorView.numberOfOpenSpots+simulatorView.numberOfOpenPassSpots;
     }
 
+    public int getTotalNumberOfCarsQueue(){
+        return simulatorView.entranceCarQueue;
+    }
+    
+    public int getTotalNumberOfPassCarsQueue(){
+        return simulatorView.entrancePassQueue;
+    }
+    
+    public int getTotalNumberOfCarsLeft(){
+        return simulatorView.lostAdHocCar;
+    }
+    
+    public int getTotalNumberOfPassCarsLeft(){
+        return simulatorView.lostPassCar;
+    }
 
     public int getDay() {
     	return day;
