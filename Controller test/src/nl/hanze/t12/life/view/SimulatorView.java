@@ -42,7 +42,7 @@ public class SimulatorView extends JFrame {
     }
     
     public void setAbonnementPlekken() {
-    	abonnementPlekken = 8;// is het aantal abonnementplekken per rij
+    	abonnementPlekken = 7;// is het aantal abonnementplekken per rij
     }
 
     public void updateView() {
@@ -97,9 +97,12 @@ public class SimulatorView extends JFrame {
         if (car == null) {
             return null;
         }
-        //if(location.getPlace() <= abonnementPlekken) {
-        //	numberOfOpenPassSpots++;
-        //}
+        if(car.getPassSpot() == true){
+			numberOfOpenPassSpots++;
+		}
+		else {
+			numberOfOpenSpots++;
+		}
         cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
         
         
@@ -133,6 +136,22 @@ public class SimulatorView extends JFrame {
             }
         }
         return null;
+    }
+    
+    public Location getReservedLocation() {
+        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
+            for (int row = 0; row < getNumberOfRows(); row++) {
+                for (int place = 0; place < getNumberOfPlaces(); place++) {
+                	if (place != abonnementPlekken) {
+                    Location location = new Location(floor, row, place);
+                    if (getCarAt(location) == null) {
+                    return location;
+                    	}
+                	}
+                }
+            }
+        }
+		return null;
     }
 
     public Car getFirstLeavingCar() {
