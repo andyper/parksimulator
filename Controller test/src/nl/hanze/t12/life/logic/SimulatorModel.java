@@ -5,6 +5,8 @@ import java.util.Random;
 import jdk.nashorn.internal.codegen.types.Type;
 import nl.hanze.t12.life.exception.LifeException;
 import nl.hanze.t12.life.view.SimulatorView;
+import nl.hanze.t12.life.logic.Car;
+
 
 public class SimulatorModel extends AbstractModel implements Runnable {
 
@@ -52,6 +54,8 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     int totalAdhoc=0;
     
     boolean passSpot;
+    static String reserveTime;
+    static int reserveLocation;
 
     public SimulatorModel() {
         entranceCarQueue = new CarQueue();
@@ -131,12 +135,14 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     	carsArriving();
     	if(entrancePassQueue.carsInQueue() > 5) {
     		lostPassCar++;
+    		entranceCarQueue.removeCar();
     	}
     	else {
     	carsEntering(entrancePassQueue);
     	}
     	if(entranceCarQueue.carsInQueue() > 5) {
     		lostAdHocCar++;
+    		entranceCarQueue.removeCar();
     	}
     	else {
     	carsEntering(entranceCarQueue);
@@ -170,7 +176,8 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     	while (queue.carsInQueue()>0 && 
     			i<enterSpeed) {
             Car car = queue.removeCar();
-            if(queue == entranceCarQueue && simulatorView.getNumberOfOpenSpots()>0 ) {
+
+            if(queue == entranceCarQueue && simulatorView.getNumberOfOpenSpots()>0 && (car.getReserved() == false)) {
             	Location freeLocation = simulatorView.getFirstFreeLocation();
             	simulatorView.setCarAt(freeLocation, car);
             	simulatorView.numberOfOpenSpots--;
@@ -205,7 +212,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 	            car.setIsPaying(true);
 	            paymentCarQueue.addCar(car);
 	            //onderscheid tussen Adhoc en gereserveerd
-	            if (car.equals(AD_HOC)) {
+	            if (car.getReserved() == false) {
 	            totalAdHocCars--;
         		}
 	            else {
@@ -365,20 +372,41 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     		return (int) (totalReserved + totalAdhoc);
     	}  
     
-    /*public static String getReservedTime() {
-    	String time();
-    	Random random = new Random();
-    	
-    	int dayLow = 8;
-    	int dayHigh = 1;
-    	int hourLow = 0;
-    	int hourHigh = 24;
-    	int minuteLow = 0;
-    	int minuteHigh = 60;
-    	int day = random.nextInt(dayLow - dayHigh) +1;
-    	int hour = random.nextInt(hourLow - hourHigh) +1;
-    	int minute = random.nextInt(minuteLow - minuteHigh) +1;
-    	
-    	time = 
-    }*/
+    /**public static String getReservedTime(Car car) {
+    	if (car.getReserved() == true) {
+ 
+	    	Random random = new Random();
+	    	
+	    	int dayLow = 8;
+	    	int dayHigh = 1;
+	    	int hourLow = 0;
+	    	int hourHigh = 24;
+	    	int minuteLow = 0;
+	    	int minuteHigh = 60;
+	    	int dayReserve = random.nextInt(dayLow - dayHigh) +1;
+	    	int hourReserve = random.nextInt(hourLow - hourHigh) +1;
+	    	int minuteReserve = random.nextInt(minuteLow - minuteHigh) +1;
+	    	 
+	    	reserveTime = ("Dag: " + dayReserve + "%d" + "Tijd: " + hourReserve + ":" + minuteReserve);
+    	}
+		return reserveTime;
+    }
+    */
+    /**public static int getReservedLocation(Car car, Location location) {
+    	if (car.getReserved() == true) {
+
+	    	Random random = new Random();
+	    	
+	    	int floorLow = 1;
+	    	int floorHigh = 4;
+	    	int rowLow = 1;
+	    	int rowHigh = 7;
+	    	int floor = random.nextInt(floorLow - floorHigh) +1;
+	    	int row = random.nextInt(rowLow - rowHigh) +1;
+	    	int place = random.nextInt() +1;
+	    	
+	    	reserveLocation = (floor + row + place);
+	    }
+	    return reserveLocation;
+	} */
 }

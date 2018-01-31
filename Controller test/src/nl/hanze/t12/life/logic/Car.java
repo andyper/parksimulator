@@ -9,6 +9,7 @@ public abstract class Car {
     private boolean isPaying;
     private boolean hasToPay;
     public boolean passSpot;
+    private boolean reserved;
 
 
     /**
@@ -38,8 +39,6 @@ public abstract class Car {
     public boolean getIsPaying() {
         return isPaying;
     }
-    
-    
 
     public void setIsPaying(boolean isPaying) {
         this.isPaying = isPaying;
@@ -48,8 +47,13 @@ public abstract class Car {
     public boolean getHasToPay() {
         return hasToPay;
     }
+    
     public boolean getPassSpot() {
         return passSpot;
+    }
+    
+    public boolean getReserved() {
+        return reserved;
     }
 
     public void setHasToPay(boolean hasToPay) {
@@ -58,6 +62,10 @@ public abstract class Car {
     
     public void setPassSpot(boolean passSpot) {
         this.passSpot = passSpot;
+    }
+    
+    public void setReserved(boolean reserved) {
+        this.reserved = reserved;
     }
 
     public void tick() {
