@@ -261,6 +261,19 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 		
 		return totalAdHocCars;
 	}
+	
+	//voor de statistieken
+    public int getNumberOfOpenSpots(){
+        return simulatorView.numberOfOpenSpots;
+    }
+
+    public int getNumberOfOpenPassSpots(){
+        return simulatorView.numberOfOpenPassSpots;
+    }
+
+    public int getTotalNumberOfOpenSpots(){
+        return simulatorView.numberOfOpenSpots+simulatorView.numberOfOpenPassSpots;
+    }
 
 
 }
