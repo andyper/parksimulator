@@ -7,4 +7,8 @@
 /ParkingPassCar.class
 /SimulatorModel.class
 /SubCar.class
+<<<<<<< HEAD
 /PieStats.class
+=======
+/ReservedCar.class
+>>>>>>> branch 'master' of https://github.com/andyper/parksimulator
