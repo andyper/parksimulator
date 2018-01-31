@@ -16,6 +16,7 @@ public class AdHocCar extends Car {
     	int stayMinutes = (int) (15 + random.nextFloat() * 3 * 60);
         this.setMinutesLeft(stayMinutes);
         this.setHasToPay(true);
+        this.setPassSpot(false);
     }
     
     public Color getColor(){
