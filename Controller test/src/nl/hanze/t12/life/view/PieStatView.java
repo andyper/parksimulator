@@ -12,28 +12,27 @@ import nl.hanze.t12.life.logic.*;
 public class PieStatView extends AbstractView{
 	private JLabel aantalNormaleBezet;
 	private JLabel aantalPassBezet;
-	private JLabel aantalResBezet;
+	private JLabel aantalReservedBezet;
 	
 	public PieStatView(SimulatorModel simulator) {
 		super(simulator);
-		Dimension size = new Dimension(200,200);
 		
 		this.aantalNormaleBezet = new JLabel("0 normale plekken bezet");
 		this.aantalPassBezet = new JLabel("0 pas plekken bezet");
-		this.aantalResBezet = new JLabel("0 gereserveerde plaatsen bezet");
-		
+		this.aantalReservedBezet = new JLabel("0 gereserveerde plaatsen bezet");
+		//TODO aantal gereserveerde plakken. Dit moet naast  het aantal ingenomen gereserveerde plakken (aantalResBezet)
 		
 		aantalNormaleBezet.setBounds(0, 0, 200, 20);
 		aantalPassBezet.setBounds(0,  60,  200,  20);
-		aantalResBezet.setBounds(0, 120, 200, 20);
+		aantalReservedBezet.setBounds(0, 120, 200, 20);
 		
-		aantalNormaleBezet.setForeground(Color.BLUE);
-		aantalPassBezet.setForeground(Color.RED);
-		aantalResBezet.setForeground(Color.GREEN);
+		aantalNormaleBezet.setForeground(Color.RED);
+		aantalPassBezet.setForeground(Color.BLUE);
+		aantalReservedBezet.setForeground(Color.GREEN);
 		
 		add(aantalNormaleBezet);
 		add(aantalPassBezet);
-		add(aantalResBezet);
+		add(aantalReservedBezet);
 		
 		
 	}
@@ -41,9 +40,9 @@ public class PieStatView extends AbstractView{
 		public void updateView() {
 			SimulatorModel simulator = (SimulatorModel) super.simulator;
 			
-			aantalNormaleBezet.setText(String.valueOf(simulator.getAantalCars() + (" normale plekken bezet")));
-			aantalPassBezet.setText(String.valueOf(simulator.getAantalPassCars() + (" passhouder plekken bezet")));
-			//aantalResBezet.setText(String.valueOf(simulator.getAantalResCars()) + (" Gereserveerde plaatsen bezet"));
+			aantalNormaleBezet.setText(String.valueOf(simulator.getAantalAdHocCars() + (" normale auto's")));
+			aantalPassBezet.setText(String.valueOf(simulator.getAantalPassCars() + (" abonnement auto's")));
+			aantalReservedBezet.setText(String.valueOf(simulator.getAantalReservedCars()) + (" gereserveerde auto's"));
 	
 	}
 }

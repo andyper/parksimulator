@@ -12,16 +12,16 @@ public class PieView extends AbstractView {
 	}
 
 	public void paintComponent(Graphics g) {
-		int aantalCars=getModel().getAantalCars();
-		int aantalPassCars=getModel().getAantalPassCars();
-		//int aantalResCars=getModel().getAantalResCars();
+		int aantalAdHocCars=(int) (getModel().getAantalAdHocCars()/1.5);
+		int aantalPassCars=(int) (getModel().getAantalPassCars()/1.5);
+		int aantalReservedCars=(int) (getModel().getAantalReservedCars()/1.5);	
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, 200, 200);
-		g.setColor(Color.BLUE);
-		g.fillArc(10, 10, 180, 180, 0, aantalCars);
 		g.setColor(Color.RED);
+		g.fillArc(10, 10, 180, 180, 0, aantalAdHocCars);
+		g.setColor(Color.BLUE);
 		g.fillArc(10, 10, 180, 180, 0, aantalPassCars);
-		//g.setColor(Color.GREEN);
-		//g.fillArc(10, 10, 180, 180, 0, aantalResCars);
+		g.setColor(Color.GREEN);
+		g.fillArc(10, 10, 180, 180, 0, aantalReservedCars);
 	}	
 }

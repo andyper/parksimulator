@@ -12,6 +12,7 @@ public class ReservedCar extends Car {
         this.setMinutesLeft(stayMinutes);
         this.setHasToPay(true);
         this.setPassSpot(false);
+        this.setReserveert(true);
 
     }
     public Color getColor(){

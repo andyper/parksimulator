@@ -2,7 +2,6 @@ package nl.hanze.t12.life.logic;
 
 import java.util.Random;
 
-import jdk.nashorn.internal.codegen.types.Type;
 import nl.hanze.t12.life.exception.LifeException;
 import nl.hanze.t12.life.view.SimulatorView;
 
@@ -19,10 +18,10 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     private SimulatorView simulatorView;
     public int totalAdHocCars;
     public int totalPassCars;
+    public int totalReservedCars;
     public int lostPassCar;
     public int lostAdHocCar;
-    public int totalReservedCars;
-    
+    private double omzet;
     public int day = 0;
     public int hour = 0;
     public int minute = 0;
@@ -205,11 +204,11 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 	            car.setIsPaying(true);
 	            paymentCarQueue.addCar(car);
 	            //onderscheid tussen Adhoc en gereserveerd
-	            if (car.equals(AD_HOC)) {
-	            totalAdHocCars--;
+	            if (car.getReserveert()) {
+	            totalReservedCars--;
         		}
 	            else {
-	            totalReservedCars--;
+	            totalAdHocCars--;
 	            }
 
         	}
@@ -227,6 +226,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     	int i=0;
     	while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
             Car car = paymentCarQueue.removeCar();
+            omzet = omzet + car.getMoetBetalen();
             // TODO Handle payment.
             carLeavesSpot(car);
             i++;
@@ -275,7 +275,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     	case RESERVED:
             for (int i = 0; i < numberOfCars; i++) {
             	entrancePassQueue.addCar(new ReservedCar());
-            	totalPassCars++;
+            	totalReservedCars++;
             }
             break;	
     	}
@@ -286,11 +286,6 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         exitCarQueue.addCar(car);
     }
 
-	public int getAantalCars() {
-		
-		return (int) ((totalPassCars+totalAdHocCars)/1.5);
-	}
-	
 	public int getAantalAdHocCars() {
 		
 		return totalAdHocCars;
@@ -298,6 +293,10 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 	
 	public int getAantalPassCars() {
 		return totalPassCars;
+	}
+	
+	public int getAantalReservedCars() {
+		return totalReservedCars;
 	}
 	/* DIT IS NIEUW
 	public int getAantalResCars() {
@@ -346,9 +345,11 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     	}
     }
     
-    public int omzet() {
-    		return (int) (totalReserved + totalAdhoc);
+    public double getOmzet() {
+    		return omzet;
     	}  
+    
+    
     
     /*public static String getReservedTime() {
     	String time();

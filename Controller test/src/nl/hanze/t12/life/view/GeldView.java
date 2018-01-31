@@ -12,6 +12,10 @@ import nl.hanze.t12.life.logic.*;
 
 public class GeldView extends AbstractView{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel totaleOpbrengst;
 	private JLabel totaleWinst;
 	private JLabel misgelopenWinst;
@@ -19,7 +23,6 @@ public class GeldView extends AbstractView{
 	
 	public GeldView(SimulatorModel simulator) {
 		super(simulator);
-		Dimension size = new Dimension(200,200);
 		
 		this.totaleOpbrengst = new JLabel("Totale opbrengst");
 		this.totaleWinst = new JLabel("Totale Winst");
@@ -39,6 +42,6 @@ public class GeldView extends AbstractView{
 	public void updateView() {
 		SimulatorModel simulator = (SimulatorModel) super.simulator;
 		
-		totaleOpbrengst.setText(("Totale opbrengst:") + (AdHocCar.krijgOpbrengst()));
+		totaleOpbrengst.setText(("Totale opbrengst: ") + (String.format("%.2f", simulator.getOmzet())));
 	}
 }

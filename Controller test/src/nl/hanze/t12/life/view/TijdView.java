@@ -14,7 +14,6 @@ public class TijdView extends AbstractView{
 	
 	public TijdView(SimulatorModel simulator) {
 		super(simulator);
-		Dimension size = new Dimension(200,200);
 		
 		this.TijdDag = new JLabel("Maandag");
 		this.TijdUur = new JLabel("");
