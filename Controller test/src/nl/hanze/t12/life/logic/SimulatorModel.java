@@ -23,7 +23,8 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     public int totalReservedCars;
     public int lostPassCar;
     public int lostAdHocCar;
-    private double omzet;
+    private double omzetCar;
+    private double omzetReservedCar;
     public int day = 0;
     public int hour = 0;
     public int minute = 0;
@@ -176,7 +177,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     			i<enterSpeed) {
             Car car = queue.removeCar();
 
-            if(queue == entranceCarQueue && simulatorView.getNumberOfOpenSpots()>0 && (car.getReserved() == false)) {
+            if(queue == entranceCarQueue && simulatorView.getNumberOfOpenSpots()>0) {
             	Location freeLocation = simulatorView.getFirstFreeLocation();
             	simulatorView.setCarAt(freeLocation, car);
             	simulatorView.numberOfOpenSpots--;
@@ -234,8 +235,12 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     	int i=0;
     	while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed){
             Car car = paymentCarQueue.removeCar();
-            omzet = omzet + car.getMoetBetalen();
-            // TODO Handle payment.
+            if(car.getReserveert()) {
+            omzetReservedCar = omzetReservedCar + car.getMoetBetalen();	
+            }
+            else {
+            omzetCar = omzetCar + car.getMoetBetalen();
+            }
             carLeavesSpot(car);
             i++;
     	}
@@ -368,9 +373,21 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     	}
     }
     
-    public double getOmzet() {
-    		return omzet;
-    	}  
+    public double getOmzetCar() {
+    		return omzetCar;
+    	} 
+    
+    public double getOmzetReservedCar() {
+		return omzetReservedCar;
+	}
+    
+    public int autoDoorgeredenPass() {
+    	return lostPassCar;
+    }
+    
+    public int autoDoorgereden() {
+    	return lostAdHocCar;
+    }
     
     /**public static String getReservedTime(Car car) {
     	if (car.getReserved() == true) {
