@@ -1,5 +1,7 @@
 package nl.hanze.t12.life.logic;
 
+import java.util.Random;
+
 public class Location {
 
     private int floor;

@@ -23,6 +23,7 @@ public class Simulator extends JFrame {
 	private SimulatorModel simulator;
 	//private AbstractController initController;
 	//private AbstractController runController;
+	private AbstractView WachtrijView;
 	
 	public Simulator() {
 		simulator=new SimulatorModel();
@@ -39,6 +40,7 @@ public class Simulator extends JFrame {
 		pieStatView = new PieStatView(simulator);
 		geldView = new GeldView(simulator);
 		//statView=new StatView(simulator);
+		WachtrijView = new WachtrijView(simulator);
 		
 		screen=new JFrame("ParkeerSimulator");
 		screen.setSize(800, 550);
@@ -52,6 +54,7 @@ public class Simulator extends JFrame {
 		screen.getContentPane().add(tijdView);
 		screen.getContentPane().add(pieStatView);
 		screen.getContentPane().add(geldView);
+		screen.getContentPane().add(WachtrijView);
 		
 		
 		label1.setBounds(60, 10, 200, 20);
@@ -71,6 +74,7 @@ public class Simulator extends JFrame {
 		//runController.setBounds(0, 210, 450, 50);
 		//initController.setBounds(440, 10, 90, 130);
 		//carParkView.setBounds(0, 0, 0, 0);
+		WachtrijView.setBounds(550, 30, 200, 200);
 		parkeerController.setBounds(175, 470, 450, 50);
 		screen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		screen.setVisible(true);

@@ -2,6 +2,8 @@ package nl.hanze.t12.life.view;
 
 import javax.swing.*;
 
+import java.util.Random;
+
 import nl.hanze.t12.life.logic.*;
 import java.awt.*;
 
@@ -16,6 +18,10 @@ public class SimulatorView extends JFrame {
     private int numberOfPlaces;
     public int numberOfOpenSpots;
     public int numberOfOpenPassSpots;
+    public int entranceCarQueue;
+    public int entrancePassQueue;
+    public int lostAdHocCar;
+    public int lostPassCar;
     private Car[][][] cars;
     public int abonnementPlekken;
 
@@ -67,6 +73,10 @@ public class SimulatorView extends JFrame {
 
     public int getNumberOfOpenPassSpots(){
     	return numberOfOpenPassSpots;
+    }
+    
+    public int getNumberOfEntranceCarQueue() {
+    	return entranceCarQueue;
     }
     
     public Car getCarAt(Location location) {
