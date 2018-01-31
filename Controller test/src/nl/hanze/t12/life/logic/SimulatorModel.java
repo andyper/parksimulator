@@ -299,7 +299,11 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 	public int getAantalPassCars() {
 		return totalPassCars;
 	}
-	
+	/* DIT IS NIEUW
+	public int getAantalResCars() {
+		return totalResCars;
+	}
+	*/
 	//voor de statistieken
     public int getNumberOfOpenSpots(){
         return simulatorView.numberOfOpenSpots;
