@@ -20,6 +20,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     public int totalPassCars;
     public int lostPassCar;
     public int lostAdHocCar;
+    private Location location;
     
     private int day = 0;
     private int hour = 0;
@@ -157,12 +158,14 @@ public class SimulatorModel extends AbstractModel implements Runnable {
             if(queue == entranceCarQueue && simulatorView.getNumberOfOpenSpots()>0 ) {
             	Location freeLocation = simulatorView.getFirstFreeLocation();
             	simulatorView.setCarAt(freeLocation, car);
+            	simulatorView.numberOfOpenSpots--;
             	i++;
             }
             else{ // toegevoegd om abonnement auto's naar hun eigen vrije plekken te rijden
             	if(simulatorView.getNumberOfOpenPassSpots()>0) {
             		Location freeLocation = simulatorView.getFirstFreeLocationPass();
             		simulatorView.setCarAt(freeLocation, car);
+            		simulatorView.numberOfOpenPassSpots--;
             		i++;
             	}
             	else {
@@ -170,6 +173,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
             		if(simulatorView.getNumberOfOpenSpots()>0) {
             			Location freeLocation = simulatorView.getFirstFreeLocation();
             			simulatorView.setCarAt(freeLocation, car);
+            			simulatorView.numberOfOpenSpots--;
             			i++;
             		}
             	}
@@ -185,10 +189,18 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 	            car.setIsPaying(true);
 	            paymentCarQueue.addCar(car);
 	            totalAdHocCars--;
+	            simulatorView.numberOfOpenSpots++;
+	            
         	}
         	else {
         		carLeavesSpot(car);
         		totalPassCars--;
+        		if(car.getPassSpot == true){
+        			simulatorView.numberOfOpenPassSpots++;
+        		}
+        		else {
+        			simulatorView.numberOfOpenSpots++;
+        		}
         	}
             car = simulatorView.getFirstLeavingCar();
         }

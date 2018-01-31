@@ -17,7 +17,7 @@ public class SimulatorView extends JFrame {
     public int numberOfOpenSpots;
     public int numberOfOpenPassSpots;
     private Car[][][] cars;
-    private int abonnementPlekken;
+    public int abonnementPlekken;
 
     public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
     	setAbonnementPlekken();
@@ -84,12 +84,6 @@ public class SimulatorView extends JFrame {
         if (oldCar == null) {
             cars[location.getFloor()][location.getRow()][location.getPlace()] = car;
             car.setLocation(location);
-            if(location.getPlace() <= abonnementPlekken) {
-            	numberOfOpenPassSpots--;
-            }
-            else {
-            	numberOfOpenSpots--;
-            }
             return true;
         }
         return false;
@@ -103,14 +97,13 @@ public class SimulatorView extends JFrame {
         if (car == null) {
             return null;
         }
+        //if(location.getPlace() <= abonnementPlekken) {
+        //	numberOfOpenPassSpots++;
+        //}
         cars[location.getFloor()][location.getRow()][location.getPlace()] = null;
+        
+        
         car.setLocation(null);
-        if(location.getPlace() <= abonnementPlekken) {
-        	numberOfOpenPassSpots++;
-        }
-        else {
-        	numberOfOpenSpots++;
-        }
         return car;
     }
 

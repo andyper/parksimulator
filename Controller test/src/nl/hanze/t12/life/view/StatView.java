@@ -13,7 +13,6 @@ public class StatView extends AbstractView{
 	
 	public StatView(SimulatorModel simulator) {
 		super(simulator);
-		Dimension size = new Dimension(200,200);
 		
 		this.aantalPlekkenVrijNormaal = new JLabel("plekken vrij: ");
 		this.aantalPlekkenVrijPass = new JLabel("plekken vrij pashouders: ");
