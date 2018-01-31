@@ -17,9 +17,9 @@ public class WachtrijView extends AbstractView{
 		Dimension size = new Dimension(200,200);
 		
 		this.aantalAutosQueue = new JLabel("Auto's in de rij: ");
-		this.aantalPassAutosQueue = new JLabel("Pashouders in de rij: ");
+		this.aantalPassAutosQueue = new JLabel("Auto's in de pass rij: ");
 		this.aantalAutosLeft = new JLabel("Auto's doorgereden: ");
-		this.aantalPassAutosLeft = new JLabel("Pashouders doorgereden: ");
+		this.aantalPassAutosLeft = new JLabel("Pass rij auto's doorgereden: ");
 		
 		aantalAutosQueue.setBounds(0, 50, 200, 20);
 		aantalPassAutosQueue.setBounds(0, 50, 200, 20);
@@ -36,8 +36,8 @@ public class WachtrijView extends AbstractView{
 		SimulatorModel simulator = (SimulatorModel) super.simulator;
 		
 		aantalAutosQueue.setText(("Auto's in de rij: ") + simulator.getTotalNumberOfCarsQueue());
-		aantalPassAutosQueue.setText(("Pashouders in de rij: ") + simulator.getTotalNumberOfPassCarsQueue());
-		aantalAutosLeft.setText(("Auto's doorgereden: ") + simulator.getTotalNumberOfCarsLeft());
-		aantalPassAutosLeft.setText(("Pashouders doorgereden: ") + simulator.getTotalNumberOfPassCarsLeft());
+		aantalPassAutosQueue.setText(("Auto's in de pass rij: ") + simulator.getTotalNumberOfPassCarsQueue());
+		aantalAutosLeft.setText(("Auto's doorgereden: ") + simulator.autoDoorgereden());
+		aantalPassAutosLeft.setText(("Pass rij auto's doorgereden: ") + simulator.autoDoorgeredenPass());
 	}
 }
