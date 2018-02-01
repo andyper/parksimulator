@@ -7,6 +7,7 @@ import nl.hanze.t12.life.logic.*;
 
 public class ParkeerController extends AbstractController implements ActionListener {
 	private static final long serialVersionUID = -8776795932665582315L;
+	// maakt elementen aan voor de controller
 	private JButton tickOne;
 	private JTextField ticks;
 	private JButton startTicks;
@@ -15,6 +16,8 @@ public class ParkeerController extends AbstractController implements ActionListe
 	public ParkeerController(SimulatorModel simulator) {
 		super(simulator);
 		setSize(450, 50);
+		
+		// geedt de elementen waarden
 		tickOne=new JButton("One step");
 		tickOne.addActionListener(this);
 		ticks=new JTextField();
@@ -23,6 +26,7 @@ public class ParkeerController extends AbstractController implements ActionListe
 		stopTicks=new JButton("Stop");
 		stopTicks.addActionListener(this);
 		
+		// voegt de elementen toe
 		this.setLayout(null);
 		add(tickOne);
 		add(ticks);
@@ -37,6 +41,7 @@ public class ParkeerController extends AbstractController implements ActionListe
 	}
 
 	@Override
+	// voert actie van knop uit
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==tickOne) {
 			try {

@@ -69,12 +69,11 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     
     public SimulatorModel() {
         
-        //Voor uitvoeren in stappen zoals LifeLogic
-        
 		run=false;
 		
     }
     
+    // deze wordt uitgevoerd door de init controller
     public void randomInit() {
 		entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
@@ -83,7 +82,8 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         simulatorView = new SimulatorView(3, 6, 30);
 		
 	}
-
+    
+    // De onderstaande methodes zetten het aantal arrivals per auto op vershillende tijden.
     public int setWeekDayArrivals() {
     	if (day == 3 && hour >19 && hour < 22){
     		weekDayArrivals = 120;
@@ -243,6 +243,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         simulatorView.updateView();	
     }
     
+    // geupdated om ervoor te zorgen dat de RESERVED arrivals er ook in konden worden verwerkt
     private void carsArriving(){
     	int numberOfCars=getNumberOfCars(setWeekDayArrivals(), setWeekendArrivals());
         addArrivingCars(numberOfCars, AD_HOC);    	
@@ -369,6 +370,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
             for (int i = 0; i < numberOfCars; i++) {
             	if(entranceCarQueue.carsInQueue() > 8 ) {
             		lostAdHocCar++;
+            		// toegevoegt om de gemiste omzet te berekenen
             		Random random = new Random();
             		this.timeLostCar = (int) ((15 + random.nextFloat() * 3 * 60));
             		lostProfit = lostProfit + (this.timeLostCar) * 0.05;
@@ -394,6 +396,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
             for (int i = 0; i < numberOfCars; i++) {
             	if(entrancePassQueue.carsInQueue() > 8 ) {
             		lostReservedCar++;
+            		// toegevoegt om de gemiste omzet te berekenen
             		Random random = new Random();
             		this.timeLostCar = (int) ((15 + random.nextFloat() * 3 * 60));
             		lostProfit = lostProfit + (this.timeLostCar) * 0.06;
@@ -413,8 +416,8 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         exitCarQueue.addCar(car);
     }
 
+    // onderste drie zijn om een specefiek aantal auto's te krijgen om die te verwerken in de GUI
 	public int getAantalAdHocCars() {
-		
 		return totalAdHocCarsStat;
 	}
 	
@@ -426,7 +429,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 		return totalReservedCarsStat;
 	}
 	
-	//voor de statistieken
+	// De volgende 18 methodes worden allemaal gebruikt om de getallen in de GUI te krijgen
     public int getNumberOfOpenSpots(){
         return simulatorView.numberOfOpenSpots;
     }
@@ -497,6 +500,8 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     public int getTotalEntranceCarQueuePass() {
     	return entrancePassQueue.carsInQueue();
     }
+    
+    // de onderste 2 worden gebruikt om de de dag en uur in te stellen via InitController
 
 	public void setDay(int day2) {
 		day = day2;

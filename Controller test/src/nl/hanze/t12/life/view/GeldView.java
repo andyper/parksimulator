@@ -16,6 +16,7 @@ public class GeldView extends AbstractView{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	// Label wordt aangemaakt
 	private JLabel totaleOpbrengstCar;
 	private JLabel totaleOpbrengstReservedCar;
 	private JLabel totaleOpbrengst;
@@ -25,16 +26,19 @@ public class GeldView extends AbstractView{
 	public GeldView(SimulatorModel simulator) {
 		super(simulator);
 		
+		// Label krijgt waarde
 		this.totaleOpbrengstCar = new JLabel("Opbrengst normale auto's: ");
 		this.totaleOpbrengstReservedCar = new JLabel("Opbrengst reservaties: ");
 		this.totaleOpbrengst = new JLabel("Totale opbrengst: ");
 		this.misgelopenWinst = new JLabel("Misgelopen winst: ");
 		
+		// Label krijgt locatie
 		totaleOpbrengstCar.setBounds(0, 0, 200, 20);
 		totaleOpbrengstReservedCar.setBounds(0, 25, 200, 20);
 		totaleOpbrengst.setBounds(0, 50, 200, 20);
 		misgelopenWinst.setBounds(0, 75, 200, 20);
 		
+		// Label wordt toegevoegd
 		add(totaleOpbrengstCar);
 		add(totaleOpbrengstReservedCar);
 		add(totaleOpbrengst);
@@ -46,6 +50,7 @@ public class GeldView extends AbstractView{
 	public void updateView() {
 		SimulatorModel simulator = (SimulatorModel) super.simulator;
 		
+		// Label wordt geupdated
 		totaleOpbrengstCar.setText(("Opbrengst normale auto's: ") + (String.format("%.2f", simulator.getOmzetCar())));
 		totaleOpbrengstReservedCar.setText(("Opbrengst reservaties: ") + (String.format("%.2f", simulator.getOmzetReservedCar())));
 		totaleOpbrengst.setText(("Totale opbrengst: ") + (String.format("%.2f", simulator.getOmzetReservedCar() + simulator.getOmzetCar())));

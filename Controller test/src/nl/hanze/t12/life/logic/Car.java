@@ -36,51 +36,58 @@ public abstract class Car {
     public void setMinutesLeft(int minutesLeft) {
         this.minutesLeft = minutesLeft;
     }
-    
+   
     public boolean getIsPaying() {
         return isPaying;
-    }
-
+    } 
+   
     public void setIsPaying(boolean isPaying) {
         this.isPaying = isPaying;
     }
-
+    
+    // toegevoegd voor checks in de SimulatorModel. Kijkt of een auto moet betalen of niet.
     public boolean getHasToPay() {
         return hasToPay;
     }
-    
-    public boolean getPassSpot() {
-        return passSpot;
-    }
-    
 
-    public boolean getReserveert() {
-        return reserveert;
-    }
-    
-    public double getMoetBetalen() {
-    	return moetBetalen;
-    }
-
-    public void setMoetBetalen(double stayMinutes) {
-        this.moetBetalen = stayMinutes * 0.05;
-    }
-    
-    public void setMoetBetalenReserved(double stayMinutes) {
-        this.moetBetalen = stayMinutes * 0.06;
-    }
-    
+    // toegevoegd voor checks in de SimulatorModel. Set of een auto moet betalen of niet.
     public void setHasToPay(boolean hasToPay) {
         this.hasToPay = hasToPay;
     }
     
+    // toegevoegd voor checks in de SimulatorModel. Kijkt of een auto wel of niet op een passSpot mag.
+    public boolean getPassSpot() {
+        return passSpot;
+    }
+    
+ // toegevoegd voor checks in de SimulatorModel. Set of een auto wel of niet op een passSpot mag.
     public void setPassSpot(boolean passSpot) {
         this.passSpot = passSpot;
     }
     
-
+    // toegevoegd voor checks in de SimulatorModel. Kijkt of een auto wel of niet reserveert.
+    public boolean getReserveert() {
+        return reserveert;
+    }
+    
+ // toegevoegd voor checks in de SimulatorModel. Set of een auto wel of niet reserveert.
     public void setReserveert(boolean reserveert) {
         this.reserveert = reserveert;
+    }
+    
+    // toegevoegd voor checks in de SimulatorModel. Geeft door hoeveel de auto moet betalen.
+    public double getMoetBetalen() {
+    	return moetBetalen;
+    }
+
+    // toegevoegd voor checks in de SimulatorModel. Berekent hoeveel de auto moet betalen.
+    public void setMoetBetalen(double stayMinutes) {
+        this.moetBetalen = stayMinutes * 0.05;
+    }
+    
+    // toegevoegd voor checks in de SimulatorModel. Berekend hoeveel de Reserved auto moet betalen.
+    public void setMoetBetalenReserved(double stayMinutes) {
+        this.moetBetalen = stayMinutes * 0.06;
     }
 
     public void tick() {

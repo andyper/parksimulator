@@ -7,6 +7,7 @@ import nl.hanze.t12.life.logic.*;
 
 public class InitController extends AbstractController implements ActionListener {
 	private static final long serialVersionUID = 8084081366423909672L;
+	// maakt elementen aan voor de controller
 	private JLabel dag;
 	private JTextField day;
 	private JLabel uur;
@@ -17,6 +18,8 @@ public class InitController extends AbstractController implements ActionListener
 	public InitController(SimulatorModel simulator) {
 		super(simulator);
 		setSize(90, 150);
+		
+		// geedt de elementen waarden
 		dag=new JLabel("Voer dag in");
 		day=new JTextField();
 		uur=new JLabel("Voer uur in");
@@ -24,6 +27,7 @@ public class InitController extends AbstractController implements ActionListener
 		init=new JButton("Init");
 		init.addActionListener(this);
 		
+		// voegt de elementen toe
 		this.setLayout(null);
 		add(dag);
 		add(day);
@@ -40,6 +44,7 @@ public class InitController extends AbstractController implements ActionListener
 	}
 
 	@Override
+	// voert actie van knop uit
 	public void actionPerformed(ActionEvent e) {
 		try {
 			int dayField=parseSize();

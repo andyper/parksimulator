@@ -11,6 +11,7 @@ public class ParkingPassCar extends Car {
     	int stayMinutes = (int) (15 + random.nextFloat() * 3 * 60);
         this.setMinutesLeft(stayMinutes);
         this.setHasToPay(false);
+        // setPassSpot() toegevoed om te gebruiken voor checks in de SimulatorModel
         this.setPassSpot(true);
 
     }

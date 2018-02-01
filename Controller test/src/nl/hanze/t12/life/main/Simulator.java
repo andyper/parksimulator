@@ -10,6 +10,7 @@ public class Simulator extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
+	// maakt de verschillende GUI elementen aan
 	private JFrame screen;
 	private AbstractView statView;
 	private AbstractView tijdView;
@@ -22,6 +23,7 @@ public class Simulator extends JFrame {
 	private AbstractView WachtrijView;
 	
 	public Simulator() {
+		// geeft de GUI elementen een waarde
 		simulator=new SimulatorModel();
 		JLabel label1 = new JLabel("Aantal auto's in garage");
 		JLabel aantalAdHocCars = new JLabel(String.valueOf(simulator.getAantalAdHocCars()));
@@ -35,6 +37,7 @@ public class Simulator extends JFrame {
 		geldView = new GeldView(simulator);
 		WachtrijView = new WachtrijView(simulator);
 		
+		// geeft de verschillende elementen een contentPande
 		screen=new JFrame("ParkeerSimulator");
 		screen.setSize(800, 550);
 		screen.setResizable(false);
@@ -48,11 +51,11 @@ public class Simulator extends JFrame {
 		screen.getContentPane().add(pieStatView);
 		screen.getContentPane().add(geldView);
 		screen.getContentPane().add(WachtrijView);
-		
-		
-		label1.setBounds(60, 10, 200, 20);
 		screen.getContentPane().add(initController);
 		screen.getContentPane().add(parkeerController);
+		
+		// geeft de vershillende elementen een plek op de GUI
+		label1.setBounds(60, 10, 200, 20);
 		aantalAutoView.setBounds(30, 30, 200, 200);
 		statView.setBounds(240, 30, 200, 200);
 		tijdView.setBounds(400, 10, 200, 20);

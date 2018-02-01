@@ -24,7 +24,7 @@ public class SimulatorView extends JFrame {
     public int abonnementPlekken;
 
     public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
-    	abonnementPlekken = 4;//verander voor abonnementPlekken
+    	abonnementPlekken = 6;//Dit getal is voor aantal abonnement plekken per rij. Je kan het dus aanpassen tussen 1 -30;
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
@@ -60,14 +60,17 @@ public class SimulatorView extends JFrame {
         return numberOfPlaces;
     }
 
+    // geeft door hoeveel plekken er vrij zijn in de parkeergarage.
     public int getNumberOfOpenSpots(){
     	return numberOfOpenSpots;
     }
 
+    // geeft door hoeveel abonnement plekken er vrij zijn in de parkeergarage.
     public int getNumberOfOpenPassSpots(){
     	return numberOfOpenPassSpots;
     }
     
+    // geeft de entranceCarQueue door
     public int getNumberOfEntranceCarQueue() {
     	return entranceCarQueue;
     }
@@ -113,6 +116,7 @@ public class SimulatorView extends JFrame {
         return car;
     }
 
+    // geeft de eerste vrije loctie voor de normale plekken door
     public Location getFirstFreeLocation() {
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
@@ -127,6 +131,7 @@ public class SimulatorView extends JFrame {
         return null;
     }
     
+    // geeft de eerste vrije loctie voor de abonnement plekken door
     public Location getFirstFreeLocationPass() {
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {
@@ -141,6 +146,7 @@ public class SimulatorView extends JFrame {
         return null;
     }
     
+    // geeft de eerste vrije loctie voor de normale plekken door voor reserveer auto's
     public Location getReservedLocation() {
         for (int floor = 0; floor < getNumberOfFloors(); floor++) {
             for (int row = 0; row < getNumberOfRows(); row++) {

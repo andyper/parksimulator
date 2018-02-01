@@ -10,7 +10,7 @@ public class PieView extends AbstractView {
 		super(simulator);
 		setSize(200, 200);
 	}
-
+	// maakt pieView aan en verwerkt de verschillende auto's hierin.
 	public void paintComponent(Graphics g) {
 		int aantalAdHocCars=(int) (getModel().getAantalAdHocCars()/1.5);
 		int aantalPassCars=(int) (getModel().getAantalPassCars()/1.5);
