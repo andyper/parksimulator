@@ -28,7 +28,7 @@ public class GeldView extends AbstractView{
 		this.totaleOpbrengstCar = new JLabel("Opbrengst normale auto's");
 		this.totaleOpbrengstReservedCar = new JLabel("Opbrengst reservaties");
 		this.totaleWinst = new JLabel("Totale Winst");
-		this.misgelopenWinst = new JLabel("Misgelopen geld");
+		this.misgelopenWinst = new JLabel("Misgelopen winst: ");
 		
 		totaleOpbrengstCar.setBounds(0, 0, 200, 20);
 		totaleOpbrengstReservedCar.setBounds(0, 25, 200, 20);
@@ -49,5 +49,6 @@ public class GeldView extends AbstractView{
 		totaleOpbrengstCar.setText(("Opbrengst normale auto's: ") + (String.format("%.2f", simulator.getOmzetCar())));
 		totaleOpbrengstReservedCar.setText(("Opbrengst reservaties: ") + (String.format("%.2f", simulator.getOmzetReservedCar())));
 		totaleWinst.setText(("Totale winst: ") + (String.format("%.2f", simulator.getOmzetReservedCar() + simulator.getOmzetCar())));
+		misgelopenWinst.setText(("Misgelopen Winst: ") + (String.format("%.2f", simulator.getLostProfit())));
 	}
 }

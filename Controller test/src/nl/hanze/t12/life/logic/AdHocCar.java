@@ -23,11 +23,5 @@ public class AdHocCar extends Car {
     public Color getColor(){
     	return COLOR;
     }
-    
-   // public void berekenOpbrengst(int stayMinutes, double prijsPerMinuut) {
-   // 	opbrengstPerAuto = stayMinutes * prijsPerMinuut;
-   // }
-   // public static double krijgOpbrengst() {
-   // 	return opbrengstPerAuto;
-   // }
 }
+   

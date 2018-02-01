@@ -21,17 +21,23 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     public int totalAdHocCars;
     public int totalPassCars;
     public int totalReservedCars;
+    public int totalAdHocCarsStat;
+    public int totalPassCarsStat;
+    public int totalReservedCarsStat;
     public int lostPassCar;
     public int lostAdHocCar;
+    public int lostReservedCar;
     private double omzetCar;
     private double omzetReservedCar;
+    private int timeLostCar;
+    private double lostProfit;
     public int day = 0;
     public int hour = 0;
     public int minute = 0;
 
     private int tickPause = 100;
 
-    int weekDayArrivals= 100; // average number of arriving cars per hour
+    int weekDayArrivals= 200; // average number of arriving cars per hour
     int weekendArrivals = 200; // average number of arriving cars per hour
     int weekDayPassArrivals= 50; // average number of arriving cars per hour
     int weekendPassArrivals = 5; // average number of arriving cars per hour
@@ -131,22 +137,10 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 
     }
 
-    private void handleEntrance(){// aangepast om rekening te houden voor als de queue te lang is.
+    private void handleEntrance(){
     	carsArriving();
-    	if(entrancePassQueue.carsInQueue() > 5) {
-    		lostPassCar++;
-    		entranceCarQueue.removeCar();
-    	}
-    	else {
     	carsEntering(entrancePassQueue);
-    	}
-    	if(entranceCarQueue.carsInQueue() > 5) {
-    		lostAdHocCar++;
-    		entranceCarQueue.removeCar();
-    	}
-    	else {
     	carsEntering(entranceCarQueue);
-    	}
     }
     
     private void handleExit(){
@@ -166,7 +160,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
         addArrivingCars(numberOfCars, AD_HOC);    	
     	numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
         addArrivingCars(numberOfCars, PASS);
-        numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
+        numberOfCars=getNumberOfCars(weekDayReservedArrivals, weekendReservedArrivals);
         addArrivingCars(numberOfCars, RESERVED);  
     }
 
@@ -176,7 +170,15 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     	while (queue.carsInQueue()>0 && 
     			i<enterSpeed) {
             Car car = queue.removeCar();
-
+            if(car.hasToPay == false) {
+    			totalPassCarsStat++;
+    		}
+    		else if(car.reserveert == true) {
+    			totalReservedCarsStat++;
+    		}
+    		else {
+    			totalAdHocCarsStat++;
+    		}
             if(queue == entranceCarQueue && simulatorView.getNumberOfOpenSpots()>0) {
             	Location freeLocation = simulatorView.getFirstFreeLocation();
             	simulatorView.setCarAt(freeLocation, car);
@@ -214,16 +216,18 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 	            //onderscheid tussen Adhoc en gereserveerd
 	            if (car.getReserveert()) {
 	            totalReservedCars--;
-
+	            totalReservedCarsStat--;
         		}
 	            else {
 	            totalAdHocCars--;
+	            totalAdHocCarsStat--;
 	            }
 
         	}
         	else {
         		carLeavesSpot(car);
         		totalPassCars--;
+        		totalPassCarsStat--;
         	}
             car = simulatorView.getFirstLeavingCar();
         }
@@ -275,20 +279,42 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     	switch(type) {
     	case AD_HOC: 
             for (int i = 0; i < numberOfCars; i++) {
+            	if(entranceCarQueue.carsInQueue() > 8 ) {
+            		lostAdHocCar++;
+            		Random random = new Random();
+            		this.timeLostCar = (int) ((15 + random.nextFloat() * 3 * 60));
+            		lostProfit = lostProfit + (this.timeLostCar) * 0.05;
+            	}
+            	else {
             	entranceCarQueue.addCar(new AdHocCar());
             	totalAdHocCars++;
+            	}
             }
             break;
     	case PASS:
             for (int i = 0; i < numberOfCars; i++) {
+            	if(entrancePassQueue.carsInQueue() > 8 ) {
+            		lostPassCar++;
+            	}
+            	else {
             	entrancePassQueue.addCar(new ParkingPassCar());
             	totalPassCars++;
+            	}
             }
             break;	   
     	case RESERVED:
             for (int i = 0; i < numberOfCars; i++) {
+            	if(entrancePassQueue.carsInQueue() > 8 ) {
+            		lostReservedCar++;
+            		Random random = new Random();
+            		this.timeLostCar = (int) ((15 + random.nextFloat() * 3 * 60));
+            		lostProfit = lostProfit + (this.timeLostCar) * 0.06;
+            	}
+            	else {
+            
             	entrancePassQueue.addCar(new ReservedCar());
             	totalReservedCars++;
+            	}
             }
             break;	
     	}
@@ -301,15 +327,15 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 
 	public int getAantalAdHocCars() {
 		
-		return totalAdHocCars;
+		return totalAdHocCarsStat;
 	}
 	
 	public int getAantalPassCars() {
-		return totalPassCars;
+		return totalPassCarsStat;
 	}
 	
 	public int getAantalReservedCars() {
-		return totalReservedCars;
+		return totalReservedCarsStat;
 	}
 	/* DIT IS NIEUW
 	public int getAantalResCars() {
@@ -356,26 +382,13 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     	return hour;
     }
     
-    
-    // auto's laten betalen (alleen Adhoc en gereserveerd)
-    private void carsPayment(int stayMinutes, int pay, int reservedPay, String type) {
-    	int total;
-    	if (carsPaying == true) {
-    		switch (type) {
-    		case AD_HOC:
-    			int totalAdhoc= stayMinutes * pay;
-    			break;
-    		case RESERVED:
-    			int totalReserved = stayMinutes * (pay + payReserved);
-    			break;
-    		}
-    		
-    	}
-    }
-    
     public double getOmzetCar() {
-    		return omzetCar;
-    	} 
+    	return omzetCar;
+    } 
+    
+    public double getLostProfit() {
+    	return lostProfit;
+    }
     
     public double getOmzetReservedCar() {
 		return omzetReservedCar;
@@ -385,45 +398,20 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     	return lostPassCar;
     }
     
+    public int autoDoorgeredenReserved() {
+    	return lostReservedCar;
+    }
+    
     public int autoDoorgereden() {
     	return lostAdHocCar;
     }
     
-    /**public static String getReservedTime(Car car) {
-    	if (car.getReserved() == true) {
- 
-	    	Random random = new Random();
-	    	
-	    	int dayLow = 8;
-	    	int dayHigh = 1;
-	    	int hourLow = 0;
-	    	int hourHigh = 24;
-	    	int minuteLow = 0;
-	    	int minuteHigh = 60;
-	    	int dayReserve = random.nextInt(dayLow - dayHigh) +1;
-	    	int hourReserve = random.nextInt(hourLow - hourHigh) +1;
-	    	int minuteReserve = random.nextInt(minuteLow - minuteHigh) +1;
-	    	 
-	    	reserveTime = ("Dag: " + dayReserve + "%d" + "Tijd: " + hourReserve + ":" + minuteReserve);
-    	}
-		return reserveTime;
+    public int getTotalEntranceCarQueue() {
+    	return entranceCarQueue.carsInQueue();
     }
-    */
-    /**public static int getReservedLocation(Car car, Location location) {
-    	if (car.getReserved() == true) {
-
-	    	Random random = new Random();
-	    	
-	    	int floorLow = 1;
-	    	int floorHigh = 4;
-	    	int rowLow = 1;
-	    	int rowHigh = 7;
-	    	int floor = random.nextInt(floorLow - floorHigh) +1;
-	    	int row = random.nextInt(rowLow - rowHigh) +1;
-	    	int place = random.nextInt() +1;
-	    	
-	    	reserveLocation = (floor + row + place);
-	    }
-	    return reserveLocation;
-	} */
+    
+    public int getTotalEntranceCarQueuePass() {
+    	return entrancePassQueue.carsInQueue();
+    }
+    
 }
