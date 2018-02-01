@@ -31,7 +31,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
 
     private int tickPause = 100;
 
-    int weekDayArrivals= 100; // average number of arriving cars per hour
+    int weekDayArrivals; // average number of arriving cars per hour
     int weekendArrivals = 200; // average number of arriving cars per hour
     int weekDayPassArrivals= 50; // average number of arriving cars per hour
     int weekendPassArrivals = 5; // average number of arriving cars per hour
@@ -57,6 +57,83 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     static String reserveTime;
     static int reserveLocation;
 
+    public int setWeekDayArrivals() {
+    	if(hour > 21 && hour < 6) {
+    		weekDayArrivals = 30;
+    	}
+    	else if (day == 3 && hour >19 && hour < 22){
+    		weekDayArrivals = 120;
+    	}
+    	else {
+    		weekDayArrivals = 100;		
+    }
+    return weekDayArrivals;
+
+    }
+    
+    public int setWeekDayPassArrivals() {
+    	if(hour > 21 && hour < 6) {
+    		weekDayPassArrivals = 10;
+    	}
+    	else if (day == 3 && hour >19 && hour < 22){
+    		weekDayPassArrivals = 60;
+    	}
+    	else {
+    		weekDayPassArrivals = 50;		
+    }
+    return weekDayPassArrivals;
+
+    }
+    
+    public int setWeekDayReservedArrivals() {
+    	if(hour > 21 && hour < 6) {
+    		weekDayReservedArrivals = 4;
+    	}
+    	else if (day == 3 && hour >19 && hour < 22){
+    		weekDayReservedArrivals = 30;
+    	}
+    	else {
+    		weekDayReservedArrivals = 25;		
+    }
+    return weekDayReservedArrivals;
+
+    }
+    
+    public int setWeekendArrivals() {
+    	if(day == 5 && hour > 19 && hour < 23) {
+    		weekendArrivals = 200;
+    	}
+    	else {
+    		weekendArrivals = 150;		
+    }
+    return weekendArrivals;
+
+    }
+    
+    public int setWeekendPassArrivals() {
+    	if(day == 5 && hour > 19 && hour < 23) {
+    		weekendPassArrivals = 10;
+    	}
+    	else {
+    		weekendPassArrivals = 5;		
+    }
+    return weekendPassArrivals;
+
+    }
+    
+    public int setWeekendReservedArrivals() {
+    	if(day == 5 && hour > 19 && hour < 23) {
+    		weekendReservedArrivals = 300;
+    	}
+    	else {
+    		weekendReservedArrivals = 250;		
+    }
+    return weekendReservedArrivals;
+
+    }
+
+
+    
     public SimulatorModel() {
         entranceCarQueue = new CarQueue();
         entrancePassQueue = new CarQueue();
@@ -162,11 +239,11 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     }
     
     private void carsArriving(){
-    	int numberOfCars=getNumberOfCars(weekDayArrivals, weekendArrivals);
+    	int numberOfCars=getNumberOfCars(setWeekDayArrivals(), setWeekendArrivals());
         addArrivingCars(numberOfCars, AD_HOC);    	
-    	numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
+    	numberOfCars=getNumberOfCars(setWeekDayPassArrivals(), setWeekendPassArrivals());
         addArrivingCars(numberOfCars, PASS);
-        numberOfCars=getNumberOfCars(weekDayPassArrivals, weekendPassArrivals);
+        numberOfCars=getNumberOfCars(setWeekDayReservedArrivals(), setWeekendReservedArrivals());
         addArrivingCars(numberOfCars, RESERVED);  
     }
 
