@@ -24,7 +24,7 @@ public class SimulatorView extends JFrame {
     public int abonnementPlekken;
 
     public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
-    	abonnementPlekken = 7;//verander voor abonnementPlekken
+    	abonnementPlekken = 4;//verander voor abonnementPlekken
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
