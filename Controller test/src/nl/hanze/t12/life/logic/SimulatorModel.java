@@ -2,6 +2,8 @@ package nl.hanze.t12.life.logic;
 
 import java.util.Random;
 
+import javax.swing.JTextField;
+
 import nl.hanze.t12.life.exception.LifeException;
 import nl.hanze.t12.life.view.SimulatorView;
 import nl.hanze.t12.life.logic.Car;
@@ -18,6 +20,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
     private SimulatorView simulatorView;
+    public int abonnementPlekken;
     public int totalAdHocCars;
     public int totalPassCars;
     public int totalReservedCars;
@@ -62,6 +65,24 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     boolean passSpot;
     static String reserveTime;
     static int reserveLocation;
+    
+    
+    public SimulatorModel() {
+        
+        //Voor uitvoeren in stappen zoals LifeLogic
+        
+		run=false;
+		
+    }
+    
+    public void randomInit() {
+		entranceCarQueue = new CarQueue();
+        entrancePassQueue = new CarQueue();
+        paymentCarQueue = new CarQueue();
+        exitCarQueue = new CarQueue();
+        simulatorView = new SimulatorView(3, 6, 30);
+		
+	}
 
     public int setWeekDayArrivals() {
     	if (day == 3 && hour >19 && hour < 22){
@@ -140,18 +161,7 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     }
 
 
-    
-    public SimulatorModel() {
-        entranceCarQueue = new CarQueue();
-        entrancePassQueue = new CarQueue();
-        paymentCarQueue = new CarQueue();
-        exitCarQueue = new CarQueue();
-        simulatorView = new SimulatorView(3, 6, 30);
-        //Voor uitvoeren in stappen zoals LifeLogic
-        
-		run=false;
-		
-    }
+   
 
    // Voor uitvoeren in stappen zoals LifeLogic
     public void doTick() throws LifeException {
@@ -487,5 +497,14 @@ public class SimulatorModel extends AbstractModel implements Runnable {
     public int getTotalEntranceCarQueuePass() {
     	return entrancePassQueue.carsInQueue();
     }
-    
+
+	public void setDay(int day2) {
+		day = day2;
+		
+	}
+	
+	public void setHour(int hour2) {
+		hour = hour2;
+		
+	}
 }

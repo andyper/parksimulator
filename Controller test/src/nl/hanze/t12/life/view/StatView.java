@@ -17,17 +17,14 @@ public class StatView extends AbstractView{
 		this.aantalPlekkenVrijNormaal = new JLabel("plekken vrij: ");
 		this.aantalPlekkenVrijPass = new JLabel("plekken vrij pashouders: ");
 		this.aantalPlekkenVrijTotaal = new JLabel("plekken vrij totaal: ");
-		//this.aantalPlekkenVrijRes = new JLabel("plekken vrij Reserveringen");
 		
 		aantalPlekkenVrijNormaal.setBounds(0, 0, 200, 20);
 		aantalPlekkenVrijPass.setBounds(0, 25, 200, 20);
 		aantalPlekkenVrijTotaal.setBounds(0, 50, 200, 20);
-		//aantalPlekkenVrijRes.setBounds(0, 75, 200, 20);
 		
 		add(aantalPlekkenVrijNormaal);
 		add(aantalPlekkenVrijPass);
 		add(aantalPlekkenVrijTotaal);
-		//add(aantalPlekkenVrijRes);
 	}
 	
 	public void updateView() {
@@ -36,9 +33,5 @@ public class StatView extends AbstractView{
 		aantalPlekkenVrijNormaal.setText(("Vrije plekken normaal: ") + simulator.getNumberOfOpenSpots());
 		aantalPlekkenVrijPass.setText(("Vrije plekken pashouders: ") + simulator.getNumberOfOpenPassSpots());
 		aantalPlekkenVrijTotaal.setText(("Totaal plekken vrij: ") + simulator.getTotalNumberOfOpenSpots());
-		//aantalPlekkenVrijRes.setText("Aantal reserveerplekken:  ");
-		
-		
-		
 	}
 }

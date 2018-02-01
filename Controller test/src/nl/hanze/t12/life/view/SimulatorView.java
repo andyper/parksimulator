@@ -2,8 +2,6 @@ package nl.hanze.t12.life.view;
 
 import javax.swing.*;
 
-import java.util.Random;
-
 import nl.hanze.t12.life.logic.*;
 import java.awt.*;
 
@@ -26,7 +24,7 @@ public class SimulatorView extends JFrame {
     public int abonnementPlekken;
 
     public SimulatorView(int numberOfFloors, int numberOfRows, int numberOfPlaces) {
-    	setAbonnementPlekken();
+    	abonnementPlekken = 7;//verander voor abonnementPlekken
         this.numberOfFloors = numberOfFloors;
         this.numberOfRows = numberOfRows;
         this.numberOfPlaces = numberOfPlaces;
@@ -46,11 +44,6 @@ public class SimulatorView extends JFrame {
         updateView();
         
     }
-    
-    public void setAbonnementPlekken() {
-    	abonnementPlekken = 7;// is het aantal abonnementplekken per rij
-    }
-
     public void updateView() {
         carParkView.updateView();
     }
@@ -252,7 +245,6 @@ private class CarParkView extends JPanel {
             size = getSize();
             carParkImage = createImage(size.width, size.height);
         }
-        setAbonnementPlekken();
         Graphics graphics = carParkImage.getGraphics();
         for(int floor = 0; floor < getNumberOfFloors(); floor++) {// eerste blok zorgt voor het aanmaken van abonnementplekken
             for(int row = 0; row < getNumberOfRows(); row++) {
